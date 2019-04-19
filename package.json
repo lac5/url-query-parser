@@ -1,0 +1,32 @@
+{
+  "name": "url-query-parser",
+  "version": "2.0.0",
+  "description": "A simple script for parsing and manipulating application/x-www-form-urlencoded data",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "repository": {
+    "type": "get",
+    "url": "git+https://github.com/larryc5/url-query-parser.git"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [],
+  "author": "larryc5 <larry.costigan5@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/larryc5/url-query-parser/issues"
+  },
+  "homepage": "https://github.com/larryc5/url-query-parser#readme",
+  "devDependencies": {
+    "prettier": "^1.17.0",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.4"
+  }
+}
