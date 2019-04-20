@@ -1,7 +1,7 @@
 type setterFn = (this: Query, key: string, value: string, found: number) => any;
 type finderFn = (this: Query, key: string, value: string, found: number) => boolean;
 
-export default class Query {
+export class Query {
     public static parse(s: string): Query {
         return new Query(s);
     }
@@ -612,3 +612,5 @@ export default class Query {
         return object;
     }
 }
+
+export default Query;
