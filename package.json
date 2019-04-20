@@ -1,11 +1,11 @@
 {
   "name": "url-query-parser",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple script for parsing and manipulating application/x-www-form-urlencoded data",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ts-node node_modules/jasmine/bin/jasmine src/**/*.spec.*",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json"
   },
@@ -24,7 +24,10 @@
   },
   "homepage": "https://github.com/larryc5/url-query-parser#readme",
   "devDependencies": {
+    "@types/jasmine": "^3.3.12",
+    "jasmine": "^3.4.0",
     "prettier": "^1.17.0",
+    "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.4"
