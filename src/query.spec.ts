@@ -7,16 +7,6 @@ describe("Query", function() {
     });
 
     describe("instance", function() {
-        describe(".query", function() {
-            it("is an array", function() {
-                let query = new Query();
-                expect(query.toString()).toEqual("");
-
-                query = new Query("a=b&c=d");
-                expect(query.toString()).toEqual("a=b&c=d");
-            });
-        });
-
         describe(".get(key)", function() {
             let query = new Query("a=b&a=c&d=e&a2=f");
 
@@ -63,7 +53,7 @@ describe("Query", function() {
 
             it("can also use a regular expression.", function() {
                 expect(query.length(/^a/i)).toBe(3);
-                expect(query.length(/^/)).toEqual(query.query.length / 2);
+                expect(query.length(/^/)).toBe(4);
             });
         });
 
@@ -156,7 +146,7 @@ describe("Query", function() {
                     Query.parse("z=0&y=2&y=1&c=1&c=2&b=0&a=0")
                         .sort()
                         .toString(),
-                ).toEqual("a=0&b=0&c=1&c=2&y=1&y=2&z=0");
+                ).toBe("a=0&b=0&c=1&c=2&y=1&y=2&z=0");
             });
         });
 
@@ -168,7 +158,7 @@ describe("Query", function() {
 
                 query.add("a");
 
-                expect(query.toString()).toEqual("a");
+                expect(query.toString()).toBe("a");
             });
 
             it("iterates objects.", function() {
@@ -176,7 +166,7 @@ describe("Query", function() {
 
                 query.add({ a: "b", c: "d" });
 
-                expect(query.toString()).toEqual("a&a=b&c=d");
+                expect(query.toString()).toBe("a&a=b&c=d");
             });
 
             it("iterates arrays.", function() {
@@ -184,7 +174,7 @@ describe("Query", function() {
 
                 query.add(["a", "b", "c", "d"]);
 
-                expect(query.toString()).toEqual("a&a=b&c=d&a&b&c&d");
+                expect(query.toString()).toBe("a&a=b&c=d&a&b&c&d");
             });
 
             it("iterates key-value arrays.", function() {
@@ -192,7 +182,7 @@ describe("Query", function() {
 
                 query.add([["a", "b"], ["c", "d"]]);
 
-                expect(query.toString()).toEqual("a&a=b&c=d&a&b&c&d&a=b&c=d");
+                expect(query.toString()).toBe("a&a=b&c=d&a&b&c&d&a=b&c=d");
             });
         });
 
@@ -202,7 +192,7 @@ describe("Query", function() {
 
                 query.add("a", "b");
 
-                expect(query.toString()).toEqual("a=b");
+                expect(query.toString()).toBe("a=b");
             });
 
             it("uses dot notation for nested objects.", function() {
@@ -210,7 +200,7 @@ describe("Query", function() {
 
                 query.add("a", { b: "c", d: { e: "f", g: "h" } });
 
-                expect(query.toString()).toEqual("a&b&a.b=c&a.d.e=f&a.d.g=h");
+                expect(query.toString()).toBe("a&b&a.b=c&a.d.e=f&a.d.g=h");
             });
 
             it("can iterate arrays.", function() {
@@ -218,7 +208,7 @@ describe("Query", function() {
 
                 query.add("b", ["c", "d", "e"]);
 
-                expect(query.toString()).toEqual("a&b&a.b=c&a.d.e=f&a.d.g=h&b=c&b=d&b=e");
+                expect(query.toString()).toBe("a&b&a.b=c&a.d.e=f&a.d.g=h&b=c&b=d&b=e");
             });
 
             it("can iterate key-value pairs.", function() {
@@ -226,7 +216,7 @@ describe("Query", function() {
 
                 query.add("c", [["d", "d"], ["e", "f", "g"], ["h"]]);
 
-                expect(query.toString()).toEqual("a&b&a.b=c&a.d.e=f&a.d.g=h&b.c&b.d&b.e&c.d=d&c.e=f&c.e=g");
+                expect(query.toString()).toBe("a&b&a.b=c&a.d.e=f&a.d.g=h&b.c&b.d&b.e&c.d=d&c.e=f&c.e=g");
             });
         });
 
@@ -236,7 +226,7 @@ describe("Query", function() {
 
                 query.set("a", "b").set("c", "d");
 
-                expect(query.toString()).toEqual("a=b&c=d");
+                expect(query.toString()).toBe("a=b&c=d");
             });
 
             it("sets keys to values if they do exist.", function() {
@@ -244,7 +234,7 @@ describe("Query", function() {
 
                 query.set("a", "d").set("c", "b");
 
-                expect(query.toString()).toEqual("a=d&c=b");
+                expect(query.toString()).toBe("a=d&c=b");
             });
 
             it("removes excess keys.", function() {
@@ -252,7 +242,7 @@ describe("Query", function() {
 
                 query.add("a", "").set("a", "");
 
-                expect(query.toString()).toEqual("a&c=b");
+                expect(query.toString()).toBe("a&c=b");
             });
 
             it("iterates arrays.", function() {
@@ -260,7 +250,7 @@ describe("Query", function() {
 
                 query.add("a", "").set("a", ["b", "c"]);
 
-                expect(query.toString()).toEqual("a=b&c=b&a=c");
+                expect(query.toString()).toBe("a=b&c=b&a=c");
             });
 
             it("can use regular expressions.", function() {
@@ -268,11 +258,11 @@ describe("Query", function() {
 
                 query.add("a2", "").set(/^a/i, "d");
 
-                expect(query.toString()).toEqual("a=d&c=b&a=d&a2=d");
+                expect(query.toString()).toBe("a=d&c=b&a=d&a2=d");
 
                 query.set(/^a/i, [""]);
 
-                expect(query.toString()).toEqual("a&c=b");
+                expect(query.toString()).toBe("a&c=b");
             });
 
             it("delets keys that are set to `false`, `null`, or `undefined`.", function() {
@@ -280,11 +270,11 @@ describe("Query", function() {
 
                 query.set("a", false);
 
-                expect(query.toString()).toEqual("c=b");
+                expect(query.toString()).toBe("c=b");
 
                 query.set("c", 0);
 
-                expect(query.toString()).toEqual("c=0");
+                expect(query.toString()).toBe("c=0");
             });
 
             it("adds keys if they don't already exist.", function() {
@@ -292,11 +282,11 @@ describe("Query", function() {
 
                 query.set("a", "b");
 
-                expect(query.toString()).toEqual("c=0&a=b");
+                expect(query.toString()).toBe("c=0&a=b");
 
                 query.set("a", ["c", "d"]);
 
-                expect(query.toString()).toEqual("c=0&a=c&a=d");
+                expect(query.toString()).toBe("c=0&a=c&a=d");
             });
 
             it("uses dot notation for nested objects.", function() {
@@ -304,7 +294,7 @@ describe("Query", function() {
 
                 query.set("a", { b: "c", d: { e: "f", g: "h" } });
 
-                expect(query.toString()).toEqual("c=0&a=c&a=d&a.b=c&a.d.e=f&a.d.g=h");
+                expect(query.toString()).toBe("c=0&a=c&a=d&a.b=c&a.d.e=f&a.d.g=h");
             });
 
             it("can iterate key-value pairs.", function() {
@@ -312,7 +302,7 @@ describe("Query", function() {
 
                 query.set("c", [["d", "d"], ["e", "f", "g"], ["d"]]);
 
-                expect(query.toString()).toEqual("c=0&a=c&a=d&a.b=c&a.d.e=f&a.d.g=h&c.e=f&c.e=g");
+                expect(query.toString()).toBe("c=0&a=c&a=d&a.b=c&a.d.e=f&a.d.g=h&c.e=f&c.e=g");
             });
 
             it("can use function to set values.", function() {
@@ -326,13 +316,13 @@ describe("Query", function() {
                     }
                 });
 
-                expect(query.toString()).toEqual("c=0&a=a-0&c=a&d&a.b=a.b-1&a.d.e=a.d.e-2&c.e=f&c.e=g");
+                expect(query.toString()).toBe("c=0&a=a-0&c=a&d&a.b=a.b-1&a.d.e=a.d.e-2&c.e=f&c.e=g");
 
                 query.set("a", function(key, value, i) {
                     return key === "a";
                 });
 
-                expect(query.toString()).toEqual("c=0&a&c=a&d&a.b=a.b-1&a.d.e=a.d.e-2&c.e=f&c.e=g");
+                expect(query.toString()).toBe("c=0&a&c=a&d&a.b=a.b-1&a.d.e=a.d.e-2&c.e=f&c.e=g");
             });
         });
 
@@ -342,7 +332,7 @@ describe("Query", function() {
 
                 query.set({ a: "d", c: "b" });
 
-                expect(query.toString()).toEqual("a=d&c=b");
+                expect(query.toString()).toBe("a=d&c=b");
             });
 
             it("iterates array.", function() {
@@ -350,7 +340,7 @@ describe("Query", function() {
 
                 query.set(["a", "b", "c", "d"]);
 
-                expect(query.toString()).toEqual("a&c&b&d");
+                expect(query.toString()).toBe("a&c&b&d");
             });
 
             it("iterates key-value array.", function() {
@@ -358,7 +348,7 @@ describe("Query", function() {
 
                 query.set([["a", "b"], ["c", "d"]]);
 
-                expect(query.toString()).toEqual("a=b&c=d");
+                expect(query.toString()).toBe("a=b&c=d");
             });
 
             it("iterates functions.", function() {
@@ -368,13 +358,13 @@ describe("Query", function() {
                     return value;
                 });
 
-                expect(query.toString()).toEqual("a=0&a=1&b=2&b=3");
+                expect(query.toString()).toBe("a=0&a=1&b=2&b=3");
 
                 query.set(function(key, value, i) {
                     return !!key && !!value && i === 0;
                 });
 
-                expect(query.toString()).toEqual("a&b");
+                expect(query.toString()).toBe("a&b");
             });
         });
 
@@ -384,7 +374,7 @@ describe("Query", function() {
 
                 query.remove("a");
 
-                expect(query.toString()).toEqual("d=e&d=f&a2=3&g=h&j=i");
+                expect(query.toString()).toBe("d=e&d=f&a2=3&g=h&j=i");
             });
 
             it("can match from arrays.", function() {
@@ -392,7 +382,7 @@ describe("Query", function() {
 
                 query.remove(["d", "j"]);
 
-                expect(query.toString()).toEqual("a=b&a=c&a2=3&g=h");
+                expect(query.toString()).toBe("a=b&a=c&a2=3&g=h");
             });
 
             it("can match from regular expressions.", function() {
@@ -400,7 +390,7 @@ describe("Query", function() {
 
                 query.remove(/^a/i);
 
-                expect(query.toString()).toEqual("d=e&d=f&g=h&j=i");
+                expect(query.toString()).toBe("d=e&d=f&g=h&j=i");
             });
 
             it("can match from functions.", function() {
@@ -410,7 +400,7 @@ describe("Query", function() {
                     return key === "g" && value === "h" && i === 5;
                 });
 
-                expect(query.toString()).toEqual("a=b&a=c&d=e&d=f&a2=3&j=i");
+                expect(query.toString()).toBe("a=b&a=c&d=e&d=f&a2=3&j=i");
             });
         });
 
@@ -453,13 +443,13 @@ describe("Query", function() {
         it("parses strings.", function() {
             let query = Query.parse("a=b&c=d");
 
-            expect(query.toString()).toEqual("a=b&c=d");
+            expect(query.toString()).toBe("a=b&c=d");
         });
 
         it("decodes URI components, replacing `+`s with ` `s.", function() {
             let query = Query.parse("a+b=c+d&e=%26");
 
-            expect(query.toString()).toEqual("a+b=c+d&e=%26");
+            expect(query.toString()).toBe("a+b=c+d&e=%26");
         });
     });
 
@@ -467,14 +457,14 @@ describe("Query", function() {
         it("parses the query string in a URL.", function() {
             let query = Query.search("http://example.com/?q=blah+blah#ingore-me");
 
-            expect(query.toString()).toEqual("q=blah+blah");
+            expect(query.toString()).toBe("q=blah+blah");
         });
 
         it("requires `?` to be before any `#` to find the query string.", function() {
-            expect(Query.search("q=blah+blah").toString()).toEqual("");
-            expect(Query.search("#?q=blah+blah").toString()).toEqual("");
-            expect(Query.search("?q=blah+blah").toString()).toEqual("q=blah+blah");
-            expect(Query.search("?q=blah+blah#?q=blah+blah").toString()).toEqual("q=blah+blah");
+            expect(Query.search("q=blah+blah").toString()).toBe("");
+            expect(Query.search("#?q=blah+blah").toString()).toBe("");
+            expect(Query.search("?q=blah+blah").toString()).toBe("q=blah+blah");
+            expect(Query.search("?q=blah+blah#?q=blah+blah").toString()).toBe("q=blah+blah");
         });
     });
 

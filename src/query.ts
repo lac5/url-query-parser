@@ -23,7 +23,7 @@ export class Query {
         return new Query().add(o).toString();
     }
 
-    public query: string[] = [];
+    private query: string[] = [];
 
     constructor(s: string = "") {
         let eql: number;
