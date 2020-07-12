@@ -1,6 +1,6 @@
 {
   "name": "url-query-parser",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A simple script for parsing and manipulating application/x-www-form-urlencoded data",
   "main": "dist/index.js",
   "scripts": {
