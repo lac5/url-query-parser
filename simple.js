@@ -13,7 +13,7 @@ module.exports = {
         ret[chunk] = '';
       }
     }
-    return o;
+    return ret;
   },
   stringify: function(object) {
     return Object.entries(object).map(([key, value]) => `${key}=${value}`).join('&');
